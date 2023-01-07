@@ -1,11 +1,22 @@
-from typing import List
+from typing import List, Optional
 from sqlalchemy.ext.asyncio import AsyncSession
-from fastapi import FastAPI, Depends, Query, HTTPException
+from fastapi import FastAPI, Depends, Query, HTTPException, Request, Header
+
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
+
+from pathlib import Path
+
 from .database import create_db_and_tables, async_session
 from .models import *
 from . import services as _services
 
 app = FastAPI()
+
+
+BASE_DIR = Path(__file__).resolve().parent
+templates = Jinja2Templates(directory=str(Path(BASE_DIR, "templates")))
+# templates = Jinja2Templates(directory="templates")
 
 
 @app.on_event("startup")
@@ -107,3 +118,38 @@ async def update_team(
 async def delete_team(*, session: AsyncSession = Depends(get_session), team_id: int):
     delete_count = await _services.delete_team(session=session, id=team_id)
     return {"message": f"Deleted {delete_count} team(s)"}
+
+
+@app.get("/index/", response_class=HTMLResponse)
+def index(request: Request, hx_request: Optional[str] = Header(None)):
+    title = "FastAPI with HTMX"
+    heroes = [
+        {
+            "name": "Tuan.Nguyen",
+            "status": 1,
+            "age": 41,
+            "date": "12/21/2021",
+            "description": "Lorem ipsum dolor sit amet. Eos doloremque accusamus qui inventore animi hic reprehenderit voluptas ut animi odio a mollitia libero quo magnam galisum id dolores beatae",
+            "color": "green",
+        },
+        {
+            "name": "Chris.Booth",
+            "status": 2,
+            "age": 57,
+            "date": "09/18/2022",
+            "description": "Lorem ipsum dolor sit amet. Eos doloremque accusamus qui inventore animi hic reprehenderit voluptas ut animi odio a mollitia libero quo magnam galisum id dolores beatae",
+            "color": "yellow",
+        },
+        {
+            "name": "Patrick.Stephen",
+            "status": 0,
+            "age": 62,
+            "date": "09/12/2021",
+            "description": "Lorem ipsum dolor sit amet. Eos doloremque accusamus qui inventore animi hic reprehenderit voluptas ut animi odio a mollitia libero quo magnam galisum id dolores beatae",
+            "color": "gray",
+        },
+    ]
+    context = {"request": request, "title": title, "heroes": heroes}
+    if hx_request:
+        return templates.TemplateResponse("hero.html", context)
+    return templates.TemplateResponse("index.html", context)
