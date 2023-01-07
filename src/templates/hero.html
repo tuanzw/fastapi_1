@@ -1,0 +1,22 @@
+{% for hero in heroes %}
+<tr class="odd:bg-white even:bg-gray-50 transition duration-300
+                        ease-in-out hover:bg-gray-100">
+    <td class="p-3 text-sm text-gray-700 whitespace-nowrap">
+        <a href="#" class="font-semibold text-blue-500
+                                hover:underline">{{hero.name}}</a>
+    </td>
+    <td class="p-3 text-sm text-gray-700 whitespace-nowrap">
+        {% if hero.status == 0 %} {% set status_text = "Inactive" %}
+        {% elif hero.status == 1 %} {% set status_text = "Active" %}
+        {% else %} {% set status_text = "Expired" %}
+        {% endif %}
+        <span class="p-1.5 text-xs font-medium uppercase
+                                tracking-wider text-{{hero.color}}-800 bg-{{hero.color}}-300
+                                bg-opacity-50 rounded-lg">{{status_text}}</span>
+
+    </td>
+    <td class="p-3 text-sm text-gray-700 whitespace-nowrap">{{hero.age}}</td>
+    <td class="p-3 text-sm text-gray-700 whitespace-nowrap">{{hero.date}}</td>
+    <td class="p-3 text-sm text-gray-700 whitespace-nowrap">{{hero.description}}</td>
+</tr>
+{% endfor %}

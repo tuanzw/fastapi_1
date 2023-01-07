@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/htmx.org@1.8.0"
+        integrity="sha384-cZuAZ+ZbwkNRnrKi05G/fjBX+azI9DNOkNYysZ0I/X5ZFgsmMiBXgDZof30F5ofc" crossorigin="anonymous">
+    </script>
+    <title>Workforce Assignment Management</title>
+</head>
+
+<body>
+    <div class="w-full p-4">
+        <div class="py-4 wfa-header">
+            <h1 class="text-xl text-gray-700">List - Workforce Assignment Management</h1>
+        </div>
+        <div class="wfa-summary">
+            <table class="w-full text-xs text-gray-700 text-left">
+                <tbody>
+                    <tr>
+                        <td class="pl-1 border border-gray-500">Site:</td>
+                        <td class="pl-1 font-medium border border-gray-500">VNSOCC2</td>
+                        <td class="pl-1 border border-gray-500">Client:</td>
+                        <td class="pl-1 font-medium border border-gray-500">CONCUNG</td>
+                        <td class="pl-1 border border-gray-500">Status:</td>
+                        <td class="pl-1 font-medium border border-gray-500">Working</td>
+                        <td class="pl-1 border border-gray-500">Date:</td>
+                        <td class="pl-1 font-medium border border-gray-500">09/28/200</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="w-full text-xs text-gray-700 text-center">
+                <thead>
+                    <tr>
+                        <td class="pl-1 border border-gray-500 text-left" rowspan="2">
+                            <p>Current Time:</p>
+                            <p>6:23:03 AM</p>
+                        </td>
+                        <td class="pl-1 border border-gray-500" colspan="3">INBOUND Containers/Trucks</td>
+                        <td class="pl-1 border border-gray-500" colspan="3">OUTBOUND Containers/Trucks</td>
+                        <td class="pl-1 border border-gray-500" colspan="3">Total Containers/Trucks</td>
+                    </tr>
+                    <tr>
+                        <td class="pl-1 border border-gray-500">Receiving</td>
+                        <td class="pl-1 border border-gray-500">Completed</td>
+                        <td class="pl-1 border border-gray-500">Waiting</td>
+                        <td class="pl-1 border border-gray-500">Loading</td>
+                        <td class="pl-1 border border-gray-500">Completed</td>
+                        <td class="pl-1 border border-gray-500">Waiting</td>
+                        <td class="pl-1 border border-gray-500">Receiving+Loading</td>
+                        <td class="pl-1 border border-gray-500">Completed</td>
+                        <td class="pl-1 border border-gray-500">Waiting</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="pl-1 border border-gray-500 text-right">Containers:</td>
+                        <td class="pl-1 border border-gray-500">0</td>
+                        <td class="pl-1 border border-gray-500">19</td>
+                        <td class="pl-1 border border-gray-500">1</td>
+                        <td class="pl-1 border border-gray-500">0</td>
+                        <td class="pl-1 border border-gray-500">61</td>
+                        <td class="pl-1 border border-gray-500">6</td>
+                        <td class="pl-1 border border-gray-500">0</td>
+                        <td class="pl-1 border border-gray-500">80</td>
+                        <td class="pl-1 border border-gray-500">7</td>
+                    </tr>
+                    <tr>
+                        <td class="pl-1 border border-gray-500 text-right">Trucks:</td>
+                        <td class="pl-1 border border-gray-500">0</td>
+                        <td class="pl-1 border border-gray-500">104</td>
+                        <td class="pl-1 border border-gray-500">1</td>
+                        <td class="pl-1 border border-gray-500">10</td>
+                        <td class="pl-1 border border-gray-500">0</td>
+                        <td class="pl-1 border border-gray-500">0</td>
+                        <td class="pl-1 border border-gray-500">0</td>
+                        <td class="pl-1 border border-gray-500">104</td>
+                        <td class="pl-1 border border-gray-500">10</td>
+                    </tr>
+                    <tr>
+                        <td class="pl-1 border border-gray-500 text-right">Total:</td>
+                        <td class="pl-1 border border-gray-500">0</td>
+                        <td class="pl-1 border border-gray-500">123</td>
+                        <td class="pl-1 border border-gray-500">11</td>
+                        <td class="pl-1 border border-gray-500">0</td>
+                        <td class="pl-1 border border-gray-500">61</td>
+                        <td class="pl-1 border border-gray-500">6</td>
+                        <td class="pl-1 border border-gray-500">0</td>
+                        <td class="pl-1 border border-gray-500">184</td>
+                        <td class="pl-1 border border-gray-500">17</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="wfa-details border border-gray-500">
+            <div class="overflow-auto">
+                <table class="w-full text-xs text-gray-700 text-center">
+                    <thead class="bg-stone-300">
+                        <tr>
+                            <th class="p-1 font-semibold whitespace-nowrap">#</th>
+                            <th class="p-1 font-semibold whitespace-nowrap">Assign</th>
+                            <th class="p-1 font-semibold whitespace-nowrap">Edit</th>
+                            <th class="p-1 font-semibold whitespace-nowrap">Conf</th>
+                            <th class="p-1 font-semibold whitespace-nowrap">Line No</th>
+                            <th class="p-1 font-semibold whitespace-nowrap">Start Time</th>
+                            <th class="p-1 font-semibold whitespace-nowrap">End Time</th>
+                            <th class="p-1 font-semibold whitespace-nowrap">Total Time</th>
+                            <th class="p-1 font-semibold whitespace-nowrap">Truck Operator</th>
+                            <th class="p-1 font-semibold whitespace-nowrap">Cont Type</th>
+                            <th class="p-1 font-semibold whitespace-nowrap">Chamber#</th>
+                            <th class="p-1 font-semibold whitespace-nowrap">Bay#</th>
+                            <th class="p-1 font-semibold whitespace-nowrap">Tallyman</th>
+                            <th class="p-1 font-semibold whitespace-nowrap">FLift</th>
+                            <th class="p-1 font-semibold whitespace-nowrap">Stevedore</th>
+                            <th class="p-1 font-semibold whitespace-nowrap">Lost Time</th>
+                            <th class="p-1 font-semibold whitespace-nowrap">Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="odd:bg-white even:bg-neutral-400 transition duration-300
+                    ease-in-out hover:bg-gray-100">
+                            <td class="p-1 whitespace-nowrap">1</td>
+                            <td class="p-1 whitespace-nowrap">Assign</td>
+                            <td class="p-1 whitespace-nowrap">Edit</td>
+                            <td class="p-1 whitespace-nowrap">Conf</td>
+                            <td class="p-1 whitespace-nowrap">2</td>
+                            <td class="p-1 whitespace-nowrap">Start Time</td>
+                            <td class="p-1 whitespace-nowrap">End Time</td>
+                            <td class="p-1 whitespace-nowrap">Total Time</td>
+                            <td class="p-1 whitespace-nowrap">Truck Operator</td>
+                            <td class="p-1 whitespace-nowrap">TRUCK</td>
+                            <td class="p-1 whitespace-nowrap">Chamber#</td>
+                            <td class="p-1 whitespace-nowrap">Bay#</td>
+                            <td class="p-1 whitespace-nowrap">Son, Ngo</td>
+                            <td class="p-1 whitespace-nowrap">Phong, Dang</td>
+                            <td class="p-1 whitespace-nowrap">NHN(2)</td>
+                            <td class="p-1 whitespace-nowrap">0</td>
+                            <td class="p-1 whitespace-nowrap">Lorem ipsum dolor sit amet. Eos doloremque accusamus qui
+                                inventore animi hic
+                                reprehenderit voluptas ut animi odio a mollitia libero quo magnam galisum id dolores
+                                beatae
+                            </td>
+                        </tr>
+                        <tr class="odd:bg-white even:bg-neutral-400 transition duration-300
+                    ease-in-out hover:bg-gray-100">
+                            <td class="p-1 whitespace-nowrap">2</td>
+                            <td class="p-1 whitespace-nowrap">Assign</td>
+                            <td class="p-1 whitespace-nowrap">Edit</td>
+                            <td class="p-1 whitespace-nowrap">Conf</td>
+                            <td class="p-1 whitespace-nowrap">24</td>
+                            <td class="p-1 whitespace-nowrap">Start Time</td>
+                            <td class="p-1 whitespace-nowrap">End Time</td>
+                            <td class="p-1 whitespace-nowrap">Total Time</td>
+                            <td class="p-1 whitespace-nowrap">Truck Operator</td>
+                            <td class="p-1 whitespace-nowrap">40HIGH</td>
+                            <td class="p-1 whitespace-nowrap">Chamber#</td>
+                            <td class="p-1 whitespace-nowrap">Bay#</td>
+                            <td class="p-1 whitespace-nowrap">Loi, Nguyen</td>
+                            <td class="p-1 whitespace-nowrap"></td>
+                            <td class="p-1 whitespace-nowrap"></td>
+                            <td class="p-1 whitespace-nowrap">0</td>
+                            <td class="p-1 whitespace-nowrap">Lorem ipsum dolor sit amet. Eos doloremque accusamus qui
+                                inventore animi hic
+                                reprehenderit voluptas ut animi odio a mollitia libero quo magnam galisum id dolores
+                                beatae
+                            </td>
+
+                        </tr>
+                        <tr class="odd:bg-white even:bg-neutral-400 transition duration-300
+                    ease-in-out hover:bg-gray-100">
+                            <td class="p-1 whitespace-nowrap">3</td>
+                            <td class="p-1 whitespace-nowrap">Assign</td>
+                            <td class="p-1 whitespace-nowrap">Edit</td>
+                            <td class="p-1 whitespace-nowrap">Conf</td>
+                            <td class="p-1 whitespace-nowrap">8</td>
+                            <td class="p-1 whitespace-nowrap">Start Time</td>
+                            <td class="p-1 whitespace-nowrap">End Time</td>
+                            <td class="p-1 whitespace-nowrap">Total Time</td>
+                            <td class="p-1 whitespace-nowrap">Truck Operator</td>
+                            <td class="p-1 whitespace-nowrap">20HIGH</td>
+                            <td class="p-1 whitespace-nowrap">Chamber#</td>
+                            <td class="p-1 whitespace-nowrap">Bay#</td>
+                            <td class="p-1 whitespace-nowrap">Nhi, Huynh</td>
+                            <td class="p-1 whitespace-nowrap"></td>
+                            <td class="p-1 whitespace-nowrap">TTN(3)</td>
+                            <td class="p-1 whitespace-nowrap">0</td>
+                            <td class="p-1 whitespace-nowrap">Lorem ipsum dolor sit amet. Eos doloremque accusamus qui
+                                inventore animi hic
+                                reprehenderit voluptas ut animi odio a mollitia libero quo magnam galisum id dolores
+                                beatae
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="flex justify-between p-1 text-xs bg-stone-300">
+                <div class="flex space-x-0.5">
+                    <div>
+                        <button type="button"
+                            class="inline-block rounded-full bg-neutral-100 text-gray-400 leading-normal uppercase hover:bg-blue-700 hover:text-white hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out w-5 h-5">
+                            <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="backward-step"
+                                class="w-1.5 mx-auto" role="img" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 320 512">
+                                <path fill="currentColor"
+                                    d="M267.5 440.6c9.5 7.9 22.8 9.7 34.1 4.4s18.4-16.6 18.4-29V96c0-12.4-7.2-23.7-18.4-29s-24.5-3.6-34.1 4.4l-192 160L64 241V96c0-17.7-14.3-32-32-32S0 78.3 0 96V416c0 17.7 14.3 32 32 32s32-14.3 32-32V271l11.5 9.6 192 160z" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div>
+                        <button type="button"
+                            class="inline-block rounded-full bg-neutral-100 text-gray-400 leading-normal uppercase hover:bg-blue-700 hover:text-white hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out w-5 h-5">
+                            <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-left"
+                                class="w-1.5 mx-auto" role="img" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 256 512">
+                                <path fill="currentColor"
+                                    d="M9.4 278.6c-12.5-12.5-12.5-32.8 0-45.3l128-128c9.2-9.2 22.9-11.9 34.9-6.9s19.8 16.6 19.8 29.6l0 256c0 12.9-7.8 24.6-19.8 29.6s-25.7 2.2-34.9-6.9l-128-128z" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div>
+                        <button type="button"
+                            class="rounded-full bg-blue-700 text-white leading-normal uppercase hover:bg-blue-700 hover:text-white hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out w-5 h-5">
+                            <p class="w-1.5 mx-auto">1</p>
+                        </button>
+                    </div>
+                    <div>
+                        <button type="button"
+                            class="inline-block rounded-full bg-neutral-100 text-gray-400 leading-normal uppercase hover:bg-blue-700 hover:text-white hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out w-5 h-5">
+                            <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-right"
+                                class="w-1.5 mx-auto" role="img" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 256 512">
+                                <path fill="currentColor"
+                                    d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div>
+                        <button type="button"
+                            class="inline-block rounded-full bg-neutral-100 text-gray-400 leading-normal uppercase hover:bg-blue-700 hover:text-white hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out w-5 h-5">
+                            <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="forward-step"
+                                class="w-1.5 mx-auto" role="img" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 320 512">
+                                <path fill="currentColor"
+                                    d="M52.5 440.6c-9.5 7.9-22.8 9.7-34.1 4.4S0 428.4 0 416V96C0 83.6 7.2 72.3 18.4 67s24.5-3.6 34.1 4.4l192 160L256 241V96c0-17.7 14.3-32 32-32s32 14.3 32 32V416c0 17.7-14.3 32-32 32s-32-14.3-32-32V271l-11.5 9.6-192 160z" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="flex space-x-0.5 text-gray-700">
+                    <p>1 - 18 of 18 items</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
