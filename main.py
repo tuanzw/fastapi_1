@@ -7,9 +7,9 @@ from fastapi.templating import Jinja2Templates
 
 from pathlib import Path
 
-from .database import create_db_and_tables, async_session
-from .models import *
-from . import services as _services
+from database import create_db_and_tables, async_session
+from models import *
+import services as _services
 
 app = FastAPI()
 

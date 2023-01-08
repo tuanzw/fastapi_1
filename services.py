@@ -2,7 +2,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from sqlalchemy import update, insert, delete
 from sqlalchemy.orm import joinedload
-from .models import *
+from models import *
 
 
 async def create_hero(session: AsyncSession, heroCreate: HeroCreate):
