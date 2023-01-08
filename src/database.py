@@ -4,7 +4,7 @@ from sqlalchemy.orm import sessionmaker
 from .models import SQLModel
 
 db_filename = "fastapi_1.db"
-sqlite_url = f"sqlite+aiosqlite:///{db_filename}"
+sqlite_url = f"sqlite+aiosqlite:///src/{db_filename}"
 
 connect_args = {"check_same_thread": False}
 
