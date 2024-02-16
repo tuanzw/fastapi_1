@@ -1,0 +1,48 @@
+{% for gateentry in gateentries %}
+<tr class="odd:bg-white even:bg-gray-50 transition duration-300
+                        ease-in-out hover:bg-gray-100">
+    <td class="p-3 text-sm text-gray-700 whitespace-nowrap">{{gateentry.uuid}}</td>
+    <td class="p-3 text-sm text-gray-700 whitespace-nowrap">
+        {% if gateentry.site_id == 0 %} {% set site_name = "Chutex" %}
+        {% elif gateentry.site_id == 1 %} {% set site_name = "ICD1" %}
+        {% else %} {% set site_name = "" %}
+        {% endif %}
+        <span>{{site_name}}</span>
+    </td>
+    <td class="p-3 text-sm text-blue-500 font-semibold whitespace-nowrap">{{gateentry.vehicle_license_plate}}
+    </td>
+    <td class="p-3 text-sm text-gray-700 whitespace-nowrap">{{gateentry.driver_id}}</td>
+    <td class="p-3 text-sm text-gray-700 whitespace-nowrap">{{gateentry.register_dstamp}}</td>
+    <td class="p-3 text-sm text-gray-700 whitespace-nowrap">{{gateentry.entry_dstamp}}</td>
+    <td class="p-3 text-sm text-gray-700 whitespace-nowrap">
+        {% if gateentry.status == 0 %} {% set status_text = "Released" %} {% set status_color = "gray" %}
+        {% elif gateentry.status == 9 %} {% set status_text = "Completed" %} {% set status_color = "yellow" %}
+        {% else %} {% set status_text = "In-Progress" %}
+        {% endif %}
+        <span class="p-1.5 text-xs font-medium
+                                tracking-wider text-{{status_color}}-800 bg-{{status_color}}-300
+                                bg-opacity-50 rounded-md">{{status_text}}</span>
+
+    </td>
+    <td class="p-3" x-data=" {disableFlg: {{gateentry.status}} == 9}">
+        <button hx-patch="/gate_entry_cf/{{gateentry.uuid}}" hx-target="closest tr" hx-swap="outerHTML swap:0.5s"
+            :disabled="disableFlg"
+            :class="disableFlg ? 'bg-gray-500': 'bg-blue-500 hover:bg-blue-700 hover:shadow-lg active:bg-blue-800 active:shadow-lg'"
+            class="p-1.5 text-white text-xs font-medium font-semibold leading-normal rounded-md capitalize focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 transition duration-150 ease-in-out flex items-center"
+            type="button">
+            <!-- <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="arrow-right-to-bracket"
+                class="w-3 mr-1" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <path fill="currentColor"
+                    d="M352 96l64 0c17.7 0 32 14.3 32 32l0 256c0 17.7-14.3 32-32 32l-64 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l64 0c53 0 96-43 96-96l0-256c0-53-43-96-96-96l-64 0c-17.7 0-32 14.3-32 32s14.3 32 32 32zm-9.4 182.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L242.7 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l210.7 0-73.4 73.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l128-128z" />
+            </svg> -->
+            <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                stroke-width="1.5" stroke="currentColor" class="w-4 mr-1">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
+            </svg>
+
+            Vào kho
+        </button>
+    </td>
+</tr>
+{% endfor %}

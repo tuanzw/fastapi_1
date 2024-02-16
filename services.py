@@ -1,7 +1,10 @@
+from datetime import date
+
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.future import select
-from sqlalchemy import update, insert, delete
+from sqlmodel import select, update, insert, delete, func, col
 from sqlalchemy.orm import joinedload
+
+# from sqlalchemy import func
 from models import *
 
 
@@ -76,3 +79,46 @@ async def delete_team(session: AsyncSession, id: int):
     result = await session.execute(stmt)
     # await session.commit()
     return result.rowcount
+
+
+async def create_gate_entry(session: AsyncSession, gate_entry_create: GateEntryCreate):
+    stmt = insert(GateEntry).values(gate_entry_create.dict())
+    result = await session.execute(stmt)
+    # await session.commit()
+    (created_uuid,) = result.inserted_primary_key
+    gate_entry = GateEntryRead(**gate_entry_create.dict(), uuid=created_uuid)
+    return gate_entry
+
+
+async def list_gate_entry(session: AsyncSession, skip: int, limit: int):
+    stmt = select(GateEntry).offset(skip).limit(limit)
+    result = await session.execute(stmt)
+    return result.scalars().all()
+
+
+async def list_gate_entry_by_date(session: AsyncSession, wdate: date, filter_txt: str):
+    stmt = select(GateEntry)
+    # if wdate:
+    #     stmt = stmt.where(func.DATE(GateEntry.register_dstamp) == wdate)
+
+    if filter_txt:
+        # stmt = stmt.where(GateEntry.vehicle_license_plate.like(f"%{filter_txt}%"))
+        stmt = stmt.where(col(GateEntry.vehicle_license_plate).contains(filter_txt))
+
+    result = await session.execute(stmt)
+    return result.scalars().all()
+
+
+async def get_gateentry_by_id(session: AsyncSession, uuid: str):
+    stmt = select(GateEntry).where(GateEntry.uuid == uuid)
+    result = await session.execute(stmt)
+    return result.scalar()
+
+
+async def patch_gate_entry(
+    session: AsyncSession, uuid: str, gateentry_update: GateEntryUpdate
+):
+    gateentry_data = gateentry_update.dict(exclude_unset=True)
+    stmt = update(GateEntry).where(GateEntry.uuid == uuid).values(gateentry_data)
+    await session.execute(stmt)
+    return await get_gateentry_by_id(session, uuid)

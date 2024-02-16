@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{%block title%}
+{{title}}
+{%endblock%}
+
+{% block content %}
+<div class="bg-slate-100 p-4">
+    <p class="text-2xl text-gray-700 font-bold mb-4 border-b-2 border-gray-300">DANH SÁCH XE VÀO CỔNG</p>
+    <div class="mb-4 overflow-auto rounded shadow">
+        <input class="form-control outline-0 rounded p-2 text-sm" type="search" name="search"
+            placeholder="Tìm kiếm BS Xe..." hx-post="/search_gateentries"
+            hx-trigger="keyup changed delay:500ms, search" hx-target="#gateentry-tbl">
+    </div>
+    <div class="mb-4 overflow-auto rounded-lg shadow">
+        <table class="w-full">
+            <thead class="bg-blue-200 border-b-2 border-gray-200">
+                <tr>
+                    <th class="p-3 text-sm font-semibold tracking-wider text-left text-gray-700">UUID</th>
+                    <th class="p-3 text-sm font-semibold tracking-wider text-left text-gray-700 ">Kho</th>
+                    <th class="p-3 text-sm font-semibold tracking-wider text-left text-gray-700 ">BS Xe</th>
+                    <th class="p-3 text-sm font-semibold tracking-wider text-left text-gray-700 ">CMND/CCCD</th>
+                    <th class="p-3 text-sm font-semibold tracking-wider text-left text-gray-700 ">Thời gian ĐK</th>
+                    <th class="p-3 text-sm font-semibold tracking-wider text-left text-gray-700 ">Thời gian Vào Cổng
+                    </th>
+                    <th class="p-3 text-sm font-semibold tracking-wider text-left text-gray-700 ">Trạng Thái</th>
+                    <th class="p-3 text-sm font-semibold tracking-wider text-left text-gray-700 ">Xác Nhận</th>
+                </tr>
+            </thead>
+            <tbody id="gateentry-tbl" class="divide-y divide-gray-100">
+                {% include "gateentry.html"%}
+            </tbody>
+        </table>
+    </div>
+</div>
+{%endblock%}

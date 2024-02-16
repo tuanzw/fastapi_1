@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="flex justify-center pt-10">
+        <div class="py-4 bg-gray-100 text-gray-700 rounded-md max-w-xl antialiased shadow-lg shadow-white-500/40">
+            <form class="px-4 mx-auto space-y-4 w-full rounded">
+                <div>
+                    <h1 class="font-bold text-4xl text-blue-900">Đăng ký vào cổng</h1>
+                    <p class="py-2 text-sm italic">Điền thông tin sau đây và nhấn nút <span
+                            class="p-1 bg-sky-600 rounded text-white font-semibold not-italic ">Đăng
+                            ký</span></p>
+                </div>
+                <div>
+                    <label for="site_id" class="block font-semibold">Kho lấy hàng <span
+                            class="text-sm text-red-500 font-semibold italic ">(Chọn đúng kho)</span></label>
+                    <select name="site_id" id="site_id" required
+                        class="border required:border-red-400 px-2 py-1 rounded w-full focus:outline-none focus:border-teal-400 hover:border-teal-300 focus:ring-blue-500">
+                        <option value="0">ICD1</option>
+                        <option value="1">Chutex</option>
+                    </select>
+                </div>
+                <div>
+                    <p for="vehicle_license_plate" class="font-semibold">*Biển số xe <span
+                            class="text-sm text-red-500 font-semibold italic ">(Bắt buộc nhập, viết liền,
+                            không gồm
+                            dấu .
+                            - )</span></p>
+                    <input placeholder="61LD12345" required
+                        class="border required:border-red-400 px-2 py-1 rounded w-full focus:outline-none focus:border-teal-400 hover:border-teal-300 uppercase"
+                        type="text" name="vehicle_license_plate" id="vehicle_license_plate" />
+                </div>
+                <div>
+                    <p for="gateintime" class="font-semibold">Giờ vào kho dự kiến <span
+                            class="text-sm font-semibold italic">(định dạng HH24Mi)</span></p>
+                    <input placeholder="1500"
+                        class="border border-gray-400 px-2 py-1 rounded w-full focus:outline-none focus:border-teal-400 hover:border-teal-300"
+                        type="text" name="gateintime" id="gateintime" />
+                </div>
+                <div>
+                    <p for="route_id" class="font-semibold">Lộ trình</p>
+                    <input placeholder="201"
+                        class="border border-gray-400 px-2 py-1 rounded w-full focus:outline-none focus:border-teal-400 hover:border-teal-300"
+                        type="text" name="route_id" id="route_id" />
+                </div>
+                <div>
+                    <p for="driver_id" class="font-semibold">CMND/CCCD tài xế</p>
+                    <input
+                        class="border border-gray-400 px-2 py-1 rounded w-full focus:outline-none focus:border-teal-400 hover:border-teal-300 uppercase"
+                        type="text" name="driver_id" id="driver_id" />
+                </div>
+                <div>
+                    <p for="phone_no" class="font-semibold">Điện thoại liên lạc</p>
+                    <input
+                        class="border border-gray-400 px-2 py-1 rounded w-full focus:outline-none focus:border-teal-400 hover:border-teal-300"
+                        type="text" name="phone_no" id="phone_no" />
+                </div>
+                <div class="flex justify-end space-x-1">
+                    <div>
+                        <button
+                            class="px-2 py-1 bg-sky-600 hover:bg-sky-700 hover:shadow-lg active:bg-sky-800 active:shadow-lg text-white text-md font-medium font-semibold leading-normal rounded focus:bg-sky-700 focus:shadow-lg focus:outline-none focus:ring-0 transition duration-150 ease-in-out flex items-center">Đăng
+                            ký</button>
+                    </div>
+                    <div>
+                        <button
+                            class="px-2 py-1 bg-gray-400 hover:bg-gray-500 hover:shadow-lg active:bg-gray-600 active:shadow-lg text-white text-md font-medium font-semibold leading-normal rounded focus:bg-gray-600 focus:shadow-lg focus:outline-none focus:ring-0 transition duration-150 ease-in-out flex items-center">Hủy</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+</body>
+
+</html>

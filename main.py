@@ -1,11 +1,12 @@
+import uvicorn
 from typing import List, Optional
+from datetime import date
 from sqlalchemy.ext.asyncio import AsyncSession
-from fastapi import FastAPI, Depends, Query, HTTPException, Request, Header
+from fastapi import FastAPI, Depends, Query, HTTPException, Request, Header, Form
 
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 
-from pathlib import Path
 
 from database import create_db_and_tables, async_session
 from models import *
@@ -14,9 +15,7 @@ import services as _services
 app = FastAPI()
 
 
-BASE_DIR = Path(__file__).resolve().parent
-templates = Jinja2Templates(directory=str(Path(BASE_DIR, "templates")))
-# templates = Jinja2Templates(directory="templates")
+templates = Jinja2Templates(directory="templates")
 
 
 @app.on_event("startup")
@@ -153,3 +152,93 @@ def index(request: Request, hx_request: Optional[str] = Header(None)):
     if hx_request:
         return templates.TemplateResponse("hero.html", context)
     return templates.TemplateResponse("index.html", context)
+
+
+@app.get("/gate_entries", response_model=List[GateEntryRead])
+async def gate_entries(
+    session: AsyncSession = Depends(get_session),
+    skip: int = 0,
+    limit: int = Query(default=10),
+):
+    return await _services.list_gate_entry(session=session, skip=skip, limit=limit)
+
+
+@app.get("/gate_entries/{uuid}", response_model=GateEntryRead)
+async def gateentry_by_id(*, session: AsyncSession = Depends(get_session), uuid: str):
+    db_gateentry = await _services.get_gateentry_by_id(session=session, uuid=uuid)
+    if not db_gateentry:
+        raise HTTPException(status_code=404, detail="Not found!")
+
+    return db_gateentry
+
+
+@app.patch("/gate_entries/{uuid}", response_model=GateEntryRead)
+async def patch_gateentry(
+    *,
+    session: AsyncSession = Depends(get_session),
+    uuid: str,
+    gateentry_update: GateEntryUpdate,
+):
+    db_gateentry = await _services.patch_gate_entry(
+        session=session, uuid=uuid, gateentry_update=gateentry_update
+    )
+    if not db_gateentry:
+        raise HTTPException(status_code=404, detail="Not found")
+    return db_gateentry
+
+
+@app.post("/gate_entries/", response_model=GateEntryRead)
+async def create_gate_entry(
+    *, session: AsyncSession = Depends(get_session), gate_entry_create: GateEntryCreate
+):
+    return await _services.create_gate_entry(
+        session=session, gate_entry_create=gate_entry_create
+    )
+
+
+@app.get("/gateentries/", response_class=HTMLResponse)
+async def gateentries(
+    request: Request,
+    hx_request: Optional[str] = Header(None),
+    session: AsyncSession = Depends(get_session),
+):
+    title = "Gate Entry HTMX"
+    gateentries = await _services.list_gate_entry_by_date(
+        session=session, wdate=date.today(), filter_txt=None
+    )
+    context = {"request": request, "title": title, "gateentries": gateentries}
+    if hx_request:
+        return templates.TemplateResponse("gateentry.html", context)
+    return templates.TemplateResponse("gateentryhtmx.html", context)
+
+
+@app.post("/search_gateentries/", response_class=HTMLResponse)
+async def search_gateentries(
+    request: Request,
+    hx_request: Optional[str] = Header(None),
+    session: AsyncSession = Depends(get_session),
+    search: str = Form(None),
+):
+    title = "Gate Entry HTMX"
+    gateentries = await _services.list_gate_entry_by_date(
+        session=session, wdate=date.today(), filter_txt=search
+    )
+    context = {"request": request, "title": title, "gateentries": gateentries}
+    return templates.TemplateResponse("gateentry.html", context)
+
+
+@app.patch("/gate_entry_cf/{uuid}", response_class=HTMLResponse)
+async def gate_entry_cf(
+    *, request: Request, session: AsyncSession = Depends(get_session), uuid: str
+):
+    data = {"status": 9}
+    gateentry_update = GateEntryUpdate.parse_obj(data)
+    gateentry = await _services.patch_gate_entry(
+        session=session, uuid=uuid, gateentry_update=gateentry_update
+    )
+    context = {"request": request, "gateentries": [gateentry]}
+    return templates.TemplateResponse("gateentry.html", context)
+
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)
